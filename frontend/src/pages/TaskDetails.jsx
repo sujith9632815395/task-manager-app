@@ -1,9 +1,10 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { fetchTaskByIdApi } from "src/api/taskApi";
-import { formatDate, formatDateTime } from "src/utils/format";
-import { useAuth } from "src/context/AuthContext";
-import { getPriorityBadgeClass, getStatusBadgeClass } from "src/utils/badges";
+import { fetchTaskByIdApi } from "../api/taskApi";
+import { formatDate, formatDateTime } from "../utils/format";
+import { useAuth } from "../context/AuthContext";
+import { getPriorityBadgeClass, getStatusBadgeClass } from "../utils/badges";
 
 export default function TaskDetails() {
   const { id } = useParams();

@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchTasksApi, deleteTaskApi } from "src/api/taskApi";
-import TaskFilters from "src/components/TaskFilters";
-import TaskCard from "src/components/TaskCard";
-import Pagination from "src/components/Pagination";
-import { useAuth } from "src/context/AuthContext";
+import { fetchTasksApi, deleteTaskApi } from "../api/taskApi";
+import TaskFilters from "../components/TaskFilters";
+import TaskCard from "../components/TaskCard";
+import Pagination from "../components/Pagination";
+import { useAuth } from "../context/AuthContext";
 
 export default function TasksList() {
   const { user } = useAuth();
@@ -40,7 +40,7 @@ export default function TasksList() {
         ...(isAdmin && query.userId ? { userId: query.userId } : {}),
       };
 
-      const res = await fetchTasksApi(params); 
+      const res = await fetchTasksApi(params); // payload: { success, message, data, meta }
       setTasks(res.data || []);
       setMeta(res.meta || null);
     } catch (err) {
@@ -56,10 +56,12 @@ export default function TasksList() {
 
   useEffect(() => {
     load();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query.page]);
 
   const applyFilters = () => {
-    setQuery((p) => ({ ...p, page: 1 })); 
+    setQuery((p) => ({ ...p, page: 1 })); // triggers load via page change
+    // But page already 1 may not trigger; so call load explicitly:
     load();
   };
 
@@ -74,7 +76,7 @@ export default function TasksList() {
       order: "desc",
     };
     setQuery(next);
-    
+    // call load immediately
     setTimeout(() => load(), 0);
   };
 
