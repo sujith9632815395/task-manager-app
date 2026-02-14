@@ -11,9 +11,8 @@ import TaskCreate from "./pages/TaskCreate";
 import TaskDetails from "./pages/TaskDetails";
 import TaskEdit from "./pages/TaskEdit";
 import Users from "./pages/Users";
-import NotFound from "./pages/NotFound";
-
 import { useAuth } from "./context/AuthContext";
+import NotFound from "./pages/NotFound";
 
 function HomeRedirect() {
   const { isAuthenticated } = useAuth();
@@ -25,7 +24,7 @@ export default function App() {
     <>
       <Navbar />
       <div className="container my-4">
-        <Router>
+        <Routes>
           {/* Public */}
           <Route path="/" element={<HomeRedirect />} />
           <Route path="/login" element={<Login />} />
@@ -49,7 +48,7 @@ export default function App() {
 
           {/* Wildcard */}
           <Route path="*" element={<NotFound />} />
-        </Router>
+        </Routes>
       </div>
     </>
   );

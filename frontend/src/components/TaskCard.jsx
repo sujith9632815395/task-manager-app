@@ -1,5 +1,5 @@
-import { formatDate } from "src/utils/format";
-import { getPriorityBadgeClass, getStatusBadgeClass } from "src/utils/badges";
+import { formatDate } from "../utils/format";
+import { getPriorityBadgeClass, getStatusBadgeClass } from "../utils/badges";
 
 export default function TaskCard({ task, onView, onEdit, onDelete }) {
   return (

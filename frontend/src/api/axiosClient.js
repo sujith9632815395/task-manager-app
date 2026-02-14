@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getAuth, clearAuth } from "src/utils/storage";
+import { getAuth, clearAuth } from "../utils/storage";
 
 const baseURL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
 

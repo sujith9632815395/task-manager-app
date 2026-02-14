@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { loginApi } from "src/api/authApi";
+import { loginApi } from "../api/authApi";
 import { useAuth } from "../context/AuthContext";
 
 export default function Login() {

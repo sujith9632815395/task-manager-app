@@ -4,12 +4,12 @@ import {
   deleteUserApi,
   fetchUsersApi,
   updateUserApi,
-} from "src/api/userApi";
+} from "../api/userApi";
 import Pagination from "../components/Pagination";
-import UserCreateForm from "src/components/UserCreateForm";
-import UserFilters from "src/components/UserFilters";
-import InlineUserEditor from "src/components/InlineUserEditor";
-import { formatDateTime } from "src/utils/format";
+import UserCreateForm from "../components/UserCreateForm";
+import UserFilters from "../components/UserFilters";
+import InlineUserEditor from "../components/InlineUserEditor";
+import { formatDateTime } from "../utils/format";
 
 export default function Users() {
   const [query, setQuery] = useState({

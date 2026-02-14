@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { fetchUsersApi } from "src/api/userApi";
+import { useEffect, useMemo, useState } from "react";
+import { fetchUsersApi } from "../api/userApi";
 import { useAuth } from "../context/AuthContext";
 
 export default function TaskForm({
@@ -24,24 +24,25 @@ export default function TaskForm({
   const [users, setUsers] = useState([]);
   const [usersError, setUsersError] = useState("");
 
-  
+  // Load users only for admin
   useEffect(() => {
     const run = async () => {
       if (!isAdmin) return;
 
       setUsersError("");
       try {
-  
+        // fetch enough users for dropdown
         const res = await fetchUsersApi({ page: 1, limit: 200 });
         const list = res?.data || [];
 
-        
+        // Put current logged-in user first
         const me = meId ? list.find((u) => u._id === meId) : null;
         const others = meId ? list.filter((u) => u._id !== meId) : list;
         const ordered = me ? [me, ...others] : list;
 
         setUsers(ordered);
 
+        // Default assignment: select current admin (or first user if id mismatch)
         setForm((p) => ({
           ...p,
           userId: p.userId || meId || ordered[0]?._id || "",
@@ -54,7 +55,7 @@ export default function TaskForm({
     };
 
     run();
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAdmin, meId]);
 
   const change = (e) =>
@@ -63,6 +64,7 @@ export default function TaskForm({
   const submit = async (e) => {
     e.preventDefault();
 
+    // Build payload
     const payload = {
       title: form.title,
       description: form.description,
@@ -72,8 +74,10 @@ export default function TaskForm({
     };
 
     if (isAdmin) {
+      // If admin leaves it empty (or user list didn't load), assign to self
       if (form.userId) payload.userId = form.userId;
       else if (meId) payload.userId = meId;
+      // else: send without userId and backend will decide (but ideally meId exists)
     }
 
     await onSubmit(payload);
